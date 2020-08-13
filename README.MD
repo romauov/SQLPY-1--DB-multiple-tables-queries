@@ -79,7 +79,7 @@ LIMIT 1
 SELECT albumname, COUNT(trackname) from album al
 JOIN track t ON al.albumid = t.albumid
 GROUP BY albumname
-ORDER BY COUNT(trackname) DESC
+ORDER BY COUNT(trackname) ASC
 LIMIT 1
 ```
 
