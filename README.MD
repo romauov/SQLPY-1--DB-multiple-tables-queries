@@ -66,21 +66,19 @@ WHERE c.collectionid IS NULL
 ```
 8. исполнителя(-ей), написавшего самый короткий по продолжительности трек (теоретически таких треков может быть несколько);
 ```
-SELECT ar.name, MIN(t.tracklength) from artist ar
+SELECT ar.name, t.tracklength from artist ar
 JOIN artistalbum aa ON ar.artistid = aa.artistid
 JOIN album al ON aa.albumid = al.albumid
-JOIN track t ON al.albumid = t.trackid
-GROUP BY ar.name, t.tracklength
-ORDER BY t.tracklength
-LIMIT 1
+JOIN track t ON al.albumid = t.albumid
+WHERE t.tracklength = (
+SELECT MIN(t.tracklength) FROM track t
+	)
 ```
 9. название альбомов, содержащих наименьшее количество треков.
 ```
-SELECT albumname, COUNT(trackname) from album al
+SELECT al.albumname, COUNT(t.trackname) from album al
 JOIN track t ON al.albumid = t.albumid
-GROUP BY albumname
-ORDER BY COUNT(trackname) ASC
-LIMIT 1
+GROUP BY al.albumname)
 ```
 
 
